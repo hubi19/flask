@@ -1,18 +1,13 @@
-from flask import Flask
+from flask import Flask, request, render_template
 
 app = Flask(__name__)
 
-@app.route('/potato')
+@app.route('/', methods=['GET', 'POST'])
 def welcome():
-    return "Hello World!"
+    name = ''
+    if request.method == 'POST' and 'username' in request.form:
+        name = request.form.get('username')
+    return render_template('index.html', name=name)
 
-@app.route('/')
-def rootpage():
-    return "Second page"
 
-@app.route('/bob')
-def bobpage():
-    return "Yo bob"
-    
-
-app.run()
+app.run() 
